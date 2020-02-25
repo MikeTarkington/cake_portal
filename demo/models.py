@@ -1,8 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # from cake_portal.models import GoogleCal
 
 class Demoer(models.Model):
-     # tie to user model through db association and remove redundant attributes like name or lead
+    email = models.EmailField(blank=False, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     region = models.CharField(max_length=30)
@@ -25,3 +29,18 @@ class Demoer(models.Model):
         (MAX_MRR, '5000'),
     )
     max_mrr = models.IntegerField(choices=MRR_CHOICES)
+
+    @staticmethod
+    def demoer_by_mrr(mrr):
+        return "$$$"
+
+    @staticmethod
+    def demoer_by_region(region):
+        return "where"
+
+    @staticmethod
+    def available_demoers(datetime, region, mrr):
+        return "who's available"
+
+    # def __str__(self):
+    #     return self.first_name

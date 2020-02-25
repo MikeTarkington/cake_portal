@@ -40,6 +40,8 @@
     ```
 - rerun server
 - check admin area for new model construct
+- access shell with via django `python3 -m django dbshell --settings=cake_portal.settings` or via bash `psql -d db_name`
+
 
 **Access Model Data in Views:**
 - in `views.py` import the model:
@@ -52,8 +54,15 @@
     ```
 - in corresponding view:
     ```html
-    {% for object in objects.all %}
+    {% for object in objects.all %} 
         {{ object.attribute }}
         <br />
     {% endfor %}
     ```
+
+**Reset Migrations**
+https://www.techiediaries.com/resetting-django-migrations/
+https://stackoverflow.com/questions/49645351/how-to-drop-app-table-with-django-and-postgres
+https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-and-manage-py
+
+

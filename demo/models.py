@@ -9,7 +9,17 @@ class Demoer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    region = models.CharField(max_length=30)
+    US_EAST = "US-EAST"
+    US_WEST = "US-WEST"
+    EMEA = "EMEA"
+    APAC = "APAC"
+    REGION_CHOICES = (
+        (US_EAST, 'US-East'),
+        (US_WEST, 'US-West'),
+        (EMEA, 'EMEA'),
+        (APAC, 'APAC'),
+    )
+    region = models.CharField(choices=REGION_CHOICES, max_length=30)
     lead = models.CharField(max_length=50)
     need_shadow = models.BooleanField()
     three_pillar = models.BooleanField()
@@ -32,11 +42,13 @@ class Demoer(models.Model):
 
     @staticmethod
     def demoer_by_mrr(mrr):
-        return "$$$"
+        mrr_demoers = Demoer.objects.filter(max_mrr__lte=mrr)
+        return mrr_demoers
 
     @staticmethod
     def demoer_by_region(region):
-        return "where"
+        region_demoers = Demoer.objects.filter(region__exact=region)
+        return region_demoers
 
     @staticmethod
     def available_demoers(datetime, region, mrr):
